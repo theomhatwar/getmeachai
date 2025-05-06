@@ -115,64 +115,57 @@ const PaymentPage = ({ username }) => {
             <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
 
 
-
-
             <div className='cover w-full bg-red-500 relative'>
-                {/* BACKGROUND IMG */}
-                {/* <img className='object-cover w-full h-auto' src="https://c10.patreonusercontent.com/4/patreon-media/p/campaign/4842667/452146dcfeb04f38853368f554aadde1/eyJ3IjoxMjAwLCJ3ZSI6MX0%3D/18.gif?token-time=1741046400&token-hash=T84CEI0oOPH7FNxbVb4U4yJWzV0mxgu0kR4cJlPbpuM%3D" alt="" /> */}
-                <img className='object-cover w-full h-auto' src={currentUser.coverpic} alt="" />
-                {/* PROFILE PIC */}
-                <div className='absolute -bottom-20 right-[33%] md:right-[46%] border-white overflow-hidden border-2 rounded-full size-36'>
-                    <img className='rounded-full object-cover size-36' width={128} height={128} src={currentUser.profilepic} alt="" />
-                    {/* <img className='rounded-full w-[130px] h-[130px] object-cover' src="https://png.pngtree.com/thumb_back/fh260/background/20241213/pngtree-cute-stunning-pink-anime-girl-wallpapers-image_16779021.jpg" alt="" /> */}
-                </div>
-            </div>
+  <img className='object-cover w-full h-auto' src={currentUser.coverpic} alt="" />
+  <div className='absolute -bottom-16 sm:-bottom-20 left-1/2 transform -translate-x-1/2 border-white overflow-hidden border-2 rounded-full size-28 sm:size-36'>
+    <img className='rounded-full object-cover w-full h-full' src={currentUser.profilepic} alt="" />
+  </div>
+</div>
 
-            <div className="info flex flex-col justify-center items-center my-24 gap-4">
-                <div className='font-bold text-lg'>
-                    @ {username}
-                </div>
-                <div className='text-slate-600'>
-                   Lets help {username} get a chai!
-                </div>
-                <div className='text-slate-600'>
-                    {payments.length} Payments .   ₹{payments.reduce((a, b) => a + b.amount, 0)} raised
-                </div>
+<div className="info flex flex-col justify-center items-center mt-24 md:mt-28 gap-3 text-center px-4">
+  <div className='font-bold text-xl sm:text-2xl'>
+    @ {username}
+  </div>
+  <div className='text-slate-600'>
+    Let's help {username} get a chai!
+  </div>
+  <div className='text-slate-600 text-sm sm:text-base'>
+    {payments.length} Payments · ₹{payments.reduce((a, b) => a + b.amount, 0)} raised
+  </div>
 
-                <div className="payments flex gap-3 w-[80%] my-10">
-                    <div className='supporters w-1/2 bg-slate-500 rounded-lg text-white p-4 '>
-                        {/* show list of all supporters as leaderboard */}
-                        <h2 className='font-bold text-2xl '>Top 10 Supporters</h2>
-                        <ul className='mx-5 text-lg'>
-                            {payments.length == 0 && <li>No payments yet</li>}
-                            {payments.map((p, i) => {
-                                return <li key={i} className='my-4 flex gap-2 items-center'>
-                                    <img width={33} src="profile.gif" alt="user avatar" />
-                                    <span>
-                                        {p.name} donated <span className='font-bold'>₹{p.amount}</span> with a message &quot;{p.message}&quot;
-                                    </span>
-                                </li>
-                            })}
+  <div className="payments flex flex-col md:flex-row gap-6 w-full max-w-5xl my-10 px-4">
+    <div className='supporters w-full md:w-1/2 bg-slate-500 rounded-lg text-white p-4 md:p-6'>
+      <h2 className='font-bold text-xl sm:text-2xl mb-2'>Top 10 Supporters</h2>
+      <ul className='mx-3 text-sm sm:text-base'>
+        {payments.length === 0 && <li>No payments yet</li>}
+        {payments.map((p, i) => (
+          <li key={i} className='my-4 flex items-center gap-3'>
+            <img width={33} src="profile.gif" alt="user avatar" />
+            <span>
+              {p.name} donated <span className='font-bold'>₹{p.amount}</span> with message &quot;{p.message}&quot;
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
 
-                        </ul>
-                    </div>
-                    <div className='makePayments w-1/2  bg-slate-500 rounded-lg text-white p-4 '>
-                        <h2 className='font-bold text-2xl '>Make a Payment</h2>
-                        <div className='flex flex-col gap-2 mt-2'>
-                            <input onChange={handleChange} value={paymentform.name} name='name' className='w-full rounded-lg p-3 bg-slate-300 text-black' type="text" placeholder='Enter Name' />
-                            <input onChange={handleChange} value={paymentform.message} name='message' className='w-full rounded-lg p-3 bg-slate-300 text-black' type="text" placeholder='Enter message' />
-                            <input onChange={handleChange} value={paymentform.amount} name='amount' className='w-full rounded-lg p-3 bg-slate-300 text-black' type="text" placeholder='Enter Amount' />
-                            <button onClick={() => pay(Number.parseInt(paymentform.amount) * 100)} type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabeled:from-purple-200" disabled={paymentform.name?.length < 1 || paymentform.message?.length < 4 || paymentform.amount?.length<1}>Pay</button>
-                        </div>
-                        <div className='flex gap-2 mt-5'>
-                            <button className='rounded-lg p-2 bg-slate-700' onClick={() => pay(1000)}>Pay ₹10</button>
-                            <button className='rounded-lg p-2 bg-slate-700' onClick={() => pay(2000)}>Pay ₹20</button>
-                            <button className='rounded-lg p-2 bg-slate-700' onClick={() => pay(3000)}>Pay ₹30</button>
-                        </div>
+    <div className='makePayments w-full md:w-1/2 bg-slate-500 rounded-lg text-white p-4 md:p-6'>
+      <h2 className='font-bold text-xl sm:text-2xl mb-2'>Make a Payment</h2>
+      <div className='flex flex-col gap-3 mt-2'>
+        <input onChange={handleChange} value={paymentform.name} name='name' className='w-full rounded-lg p-3 bg-slate-300 text-black' type="text" placeholder='Enter Name' />
+        <input onChange={handleChange} value={paymentform.message} name='message' className='w-full rounded-lg p-3 bg-slate-300 text-black' type="text" placeholder='Enter message' />
+        <input onChange={handleChange} value={paymentform.amount} name='amount' className='w-full rounded-lg p-3 bg-slate-300 text-black' type="text" placeholder='Enter Amount' />
+        <button onClick={() => pay(Number.parseInt(paymentform.amount) * 100)} type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:from-purple-200" disabled={paymentform.name?.length < 1 || paymentform.message?.length < 4 || paymentform.amount?.length < 1}>Pay</button>
+      </div>
+      <div className='flex flex-wrap gap-2 mt-5'>
+        <button className='rounded-lg p-2 bg-slate-700' onClick={() => pay(1000)}>Pay ₹10</button>
+        <button className='rounded-lg p-2 bg-slate-700' onClick={() => pay(2000)}>Pay ₹20</button>
+        <button className='rounded-lg p-2 bg-slate-700' onClick={() => pay(3000)}>Pay ₹30</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-                    </div>
-                </div>
-            </div>
         </>
     )
 }
